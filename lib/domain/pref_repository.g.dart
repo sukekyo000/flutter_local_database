@@ -7,13 +7,13 @@ part of 'pref_repository.dart';
 // **************************************************************************
 
 _$_Pref _$$_PrefFromJson(Map<String, dynamic> json) => _$_Pref(
-      prefId: json['prefId'] as int,
-      prefName: json['prefName'] as String,
-      prefKana: json['prefKana'] as String,
+      prefId: json['pref_id'] as int,
+      prefName: json['pref_name'] as String,
+      prefKana: json['pref_kana'] as String,
     );
 
 Map<String, dynamic> _$$_PrefToJson(_$_Pref instance) => <String, dynamic>{
-      'prefId': instance.prefId,
-      'prefName': instance.prefName,
-      'prefKana': instance.prefKana,
+      'pref_id': instance.prefId,
+      'pref_name': instance.prefName,
+      'pref_kana': instance.prefKana,
     };

@@ -10,9 +10,9 @@ part 'pref_repository.g.dart';
 @freezed
 class Pref with _$Pref {
   const factory Pref({
-    required int prefId,
-    required String prefName,
-    required String prefKana,
+    @JsonKey(name: 'pref_id') required int prefId,
+    @JsonKey(name: 'pref_name') required String prefName,
+    @JsonKey(name: 'pref_kana') required String prefKana,
   }) = _Pref;
 
   factory Pref.fromJson(Map<String, Object?> json)
@@ -20,7 +20,7 @@ class Pref with _$Pref {
 }
 
 class PrefRepository extends LocalDataBase {
-  String prefCreateSql = "CREATE TABLE pref(prefId INTEGER, prefName TEXT, prefKana TEXT)";
+  String prefCreateSql = "CREATE TABLE pref_master(pref_id INTEGER, pref_name TEXT, pref_kana TEXT);";
 
   Future<Database> prefTable() async {
     Database prefTable = await database(prefCreateSql);
@@ -30,7 +30,7 @@ class PrefRepository extends LocalDataBase {
   Future<void> insertPref(Pref pref) async {
     Database prefDatabase = await prefTable();
     await prefDatabase.insert(
-      "pref",
+      "pref_master",
       pref.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -40,12 +40,13 @@ class PrefRepository extends LocalDataBase {
 
   Future<List<Pref>> getPref() async {
     Database prefDatabase = await prefTable();
-    final List<Map<String, dynamic>> prefs = await prefDatabase.query('pref');
+    // テーブルを更新する際はデータベース名の名前も変えないとエラーになる(キャッシュ？)
+    final List<Map<String, dynamic>> prefs = await prefDatabase.query('pref_master');
     return List.generate(prefs.length, (i) {
       return Pref(
-        prefId: prefs[i]['prefId'],
-        prefName: prefs[i]['prefName'],
-        prefKana: prefs[i]['prefKana'],
+        prefId: prefs[i]['pref_id'],
+        prefName: prefs[i]['pref_name'],
+        prefKana: prefs[i]['pref_kana'],
       );
     });
   }
@@ -53,9 +54,9 @@ class PrefRepository extends LocalDataBase {
   Future<void> updatePref(Pref pref) async {
     Database prefDatabase = await prefTable();
     await prefDatabase.update(
-      'pref',
+      'pref_master',
       pref.toJson(),
-      where: "prefId = ?",
+      where: "pref_id = ?",
       whereArgs: [pref.prefId],
       conflictAlgorithm: ConflictAlgorithm.fail,
     );
@@ -64,8 +65,8 @@ class PrefRepository extends LocalDataBase {
   Future<void> deletePref(int prefId) async {
     Database prefDatabase = await prefTable();
     await prefDatabase.delete(
-      'pref',
-      where: "prefId = ?",
+      'pref_master',
+      where: "pref_id = ?",
       whereArgs: [prefId],
     );
   }

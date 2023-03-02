@@ -20,8 +20,11 @@ Pref _$PrefFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Pref {
+  @JsonKey(name: 'pref_id')
   int get prefId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pref_name')
   String get prefName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pref_kana')
   String get prefKana => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -34,7 +37,10 @@ abstract class $PrefCopyWith<$Res> {
   factory $PrefCopyWith(Pref value, $Res Function(Pref) then) =
       _$PrefCopyWithImpl<$Res, Pref>;
   @useResult
-  $Res call({int prefId, String prefName, String prefKana});
+  $Res call(
+      {@JsonKey(name: 'pref_id') int prefId,
+      @JsonKey(name: 'pref_name') String prefName,
+      @JsonKey(name: 'pref_kana') String prefKana});
 }
 
 /// @nodoc
@@ -77,7 +83,10 @@ abstract class _$$_PrefCopyWith<$Res> implements $PrefCopyWith<$Res> {
       __$$_PrefCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int prefId, String prefName, String prefKana});
+  $Res call(
+      {@JsonKey(name: 'pref_id') int prefId,
+      @JsonKey(name: 'pref_name') String prefName,
+      @JsonKey(name: 'pref_kana') String prefKana});
 }
 
 /// @nodoc
@@ -114,15 +123,20 @@ class __$$_PrefCopyWithImpl<$Res> extends _$PrefCopyWithImpl<$Res, _$_Pref>
 @JsonSerializable()
 class _$_Pref with DiagnosticableTreeMixin implements _Pref {
   const _$_Pref(
-      {required this.prefId, required this.prefName, required this.prefKana});
+      {@JsonKey(name: 'pref_id') required this.prefId,
+      @JsonKey(name: 'pref_name') required this.prefName,
+      @JsonKey(name: 'pref_kana') required this.prefKana});
 
   factory _$_Pref.fromJson(Map<String, dynamic> json) => _$$_PrefFromJson(json);
 
   @override
+  @JsonKey(name: 'pref_id')
   final int prefId;
   @override
+  @JsonKey(name: 'pref_name')
   final String prefName;
   @override
+  @JsonKey(name: 'pref_kana')
   final String prefKana;
 
   @override
@@ -172,17 +186,20 @@ class _$_Pref with DiagnosticableTreeMixin implements _Pref {
 
 abstract class _Pref implements Pref {
   const factory _Pref(
-      {required final int prefId,
-      required final String prefName,
-      required final String prefKana}) = _$_Pref;
+      {@JsonKey(name: 'pref_id') required final int prefId,
+      @JsonKey(name: 'pref_name') required final String prefName,
+      @JsonKey(name: 'pref_kana') required final String prefKana}) = _$_Pref;
 
   factory _Pref.fromJson(Map<String, dynamic> json) = _$_Pref.fromJson;
 
   @override
+  @JsonKey(name: 'pref_id')
   int get prefId;
   @override
+  @JsonKey(name: 'pref_name')
   String get prefName;
   @override
+  @JsonKey(name: 'pref_kana')
   String get prefKana;
   @override
   @JsonKey(ignore: true)
