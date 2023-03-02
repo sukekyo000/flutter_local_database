@@ -1,22 +1,23 @@
 
 import 'package:local_database/data/database.dart';
 import 'package:sqflite/sqflite.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:flutter/foundation.dart';
 
-class Pref {
-  Pref({required this.prefId, required this.prefName, required this.prefKana});
-  final int prefId;
-  final String prefName;
-  final String prefKana;
+part 'pref_repository.freezed.dart';
+part 'pref_repository.g.dart';
 
-  Map<String, dynamic> toMap(){
-    return {
-      "prefId": prefId,
-      "prefName": prefName,
-      "prefKana": prefKana
-    };
-  }
+@freezed
+class Pref with _$Pref {
+  const factory Pref({
+    required int prefId,
+    required String prefName,
+    required String prefKana,
+  }) = _Pref;
+
+  factory Pref.fromJson(Map<String, Object?> json)
+      => _$PrefFromJson(json);
 }
-
 
 class PrefRepository extends LocalDataBase {
   String prefCreateSql = "CREATE TABLE pref(prefId INTEGER, prefName TEXT, prefKana TEXT)";
@@ -30,7 +31,7 @@ class PrefRepository extends LocalDataBase {
     Database prefDatabase = await prefTable();
     await prefDatabase.insert(
       "pref",
-      pref.toMap(),
+      pref.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     await prefDatabase.close();
@@ -53,7 +54,7 @@ class PrefRepository extends LocalDataBase {
     Database prefDatabase = await prefTable();
     await prefDatabase.update(
       'pref',
-      pref.toMap(),
+      pref.toJson(),
       where: "prefId = ?",
       whereArgs: [pref.prefId],
       conflictAlgorithm: ConflictAlgorithm.fail,
